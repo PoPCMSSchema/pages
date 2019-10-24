@@ -1,5 +1,5 @@
 <?php
-namespace PoP\Pages\Route;
+namespace PoP\Pages\Routing;
 
 class PathUtils {
 
