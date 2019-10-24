@@ -6,7 +6,7 @@ use PoP\ComponentModel\Server\Utils;
 use PoP\ComponentModel\Engine_Vars;
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\API\Facades\FieldQueryConvertorFacade;
-use PoP\Routing\RouteNatures;
+use PoP\Pages\Routing\RouteNatures;
 
 class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
 {
