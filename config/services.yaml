@@ -1,0 +1,4 @@
+services:
+    PoP\Pages\RouteModuleProcessors\:
+        resource: '../src/RouteModuleProcessors/*'
+        public: true
