@@ -1,8 +1,7 @@
 <?php
-namespace PoP\Pages\RouteModuleProcessors;
+namespace PoP\Pages\Conditional\RESTAPI\RouteModuleProcessors;
 
 use PoP\ModuleRouting\AbstractEntryRouteModuleProcessor;
-use PoP\ComponentModel\Server\Utils;
 use PoP\ComponentModel\Engine_Vars;
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\API\Facades\FieldQueryConvertorFacade;
@@ -38,26 +37,14 @@ class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
     {
         $ret = array();
 
-        // API
-        if (!Utils::disableAPI()) {
-            $vars = Engine_Vars::getVars();
-
-            // Page
-            $ret[RouteNatures::PAGE][] = [
-                'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_DATAQUERY_PAGE_FIELDS],
-                'conditions' => [
-                    'scheme' => POP_SCHEME_API,
-                ],
-            ];
-            // REST API Page
-            $ret[RouteNatures::PAGE][] = [
-                'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_DATAQUERY_PAGE_FIELDS, ['fields' => isset($vars['query']) ? $vars['query'] : self::getRESTFields()]],
-                'conditions' => [
-                    'scheme' => POP_SCHEME_API,
-                    'datastructure' => GD_DATALOAD_DATASTRUCTURE_REST,
-                ],
-            ];
-        }
+        $vars = Engine_Vars::getVars();
+        $ret[RouteNatures::PAGE][] = [
+            'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_DATAQUERY_PAGE_FIELDS, ['fields' => isset($vars['query']) ? $vars['query'] : self::getRESTFields()]],
+            'conditions' => [
+                'scheme' => POP_SCHEME_API,
+                'datastructure' => GD_DATALOAD_DATASTRUCTURE_REST,
+            ],
+        ];
 
         return $ret;
     }
