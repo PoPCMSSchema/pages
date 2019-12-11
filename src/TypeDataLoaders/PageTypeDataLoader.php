@@ -10,7 +10,7 @@ class PageTypeDataLoader extends AbstractTypeQueryableDataResolver
         return GD_DATAQUERY_PAGE;
     }
 
-    public function resolveObjectsFromIDs(array $ids): array
+    public function getObjects(array $ids): array
     {
         $cmspagesapi = \PoP\Pages\FunctionAPIFactory::getInstance();
         $query = array(
