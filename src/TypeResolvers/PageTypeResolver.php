@@ -2,7 +2,7 @@
 namespace PoP\Pages\TypeResolvers;
 
 use PoP\ComponentModel\TypeResolvers\AbstractTypeResolver;
-use PoP\Pages\TypeDataResolvers\PageTypeDataResolver;
+use PoP\Pages\TypeDataLoaders\PageTypeDataLoader;
 
 class PageTypeResolver extends AbstractTypeResolver
 {
@@ -20,9 +20,9 @@ class PageTypeResolver extends AbstractTypeResolver
         return $cmspagesresolver->getPageId($page);
     }
 
-    public function getTypeDataResolverClass(): string
+    public function getTypeDataLoaderClass(): string
     {
-        return PageTypeDataResolver::class;
+        return PageTypeDataLoader::class;
     }
 }
 
