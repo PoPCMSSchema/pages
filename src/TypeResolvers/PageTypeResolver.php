@@ -6,11 +6,11 @@ use PoP\Pages\TypeDataResolvers\PageTypeDataResolver;
 
 class PageTypeResolver extends AbstractTypeResolver
 {
-    public const TYPE_COLLECTION_NAME = 'pages';
+    public const NAME = 'pages';
 
-    public function getTypeCollectionName(): string
+    public function getTypeName(): string
     {
-        return self::TYPE_COLLECTION_NAME;
+        return self::NAME;
     }
 
     public function getId($resultItem)
