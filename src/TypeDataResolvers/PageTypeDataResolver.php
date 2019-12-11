@@ -2,18 +2,12 @@
 namespace PoP\Pages\TypeDataResolvers;
 use PoP\LooseContracts\Facades\NameResolverFacade;
 use PoP\ComponentModel\TypeDataResolvers\AbstractTypeQueryableDataResolver;
-use PoP\Pages\TypeResolvers\PageTypeResolver;
 
 class PageTypeDataResolver extends AbstractTypeQueryableDataResolver
 {
     public function getDataquery()
     {
         return GD_DATAQUERY_PAGE;
-    }
-
-    public function getTypeResolverClass(): string
-    {
-        return PageTypeResolver::class;
     }
 
     public function resolveObjectsFromIDs(array $ids): array
