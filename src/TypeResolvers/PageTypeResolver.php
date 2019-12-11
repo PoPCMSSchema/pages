@@ -6,7 +6,7 @@ use PoP\Pages\TypeDataResolvers\PageTypeDataResolver;
 
 class PageTypeResolver extends AbstractTypeResolver
 {
-    public const NAME = 'pages';
+    public const NAME = 'Page';
 
     public function getTypeName(): string
     {
