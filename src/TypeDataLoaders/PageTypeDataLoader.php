@@ -1,9 +1,9 @@
 <?php
 namespace PoP\Pages\TypeDataLoaders;
 use PoP\LooseContracts\Facades\NameResolverFacade;
-use PoP\ComponentModel\TypeDataLoaders\AbstractTypeQueryableDataResolver;
+use PoP\ComponentModel\TypeDataLoaders\AbstractTypeQueryableDataLoader;
 
-class PageTypeDataLoader extends AbstractTypeQueryableDataResolver
+class PageTypeDataLoader extends AbstractTypeQueryableDataLoader
 {
     public function getDataquery()
     {
