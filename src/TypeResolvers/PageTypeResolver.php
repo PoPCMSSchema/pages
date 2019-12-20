@@ -20,7 +20,7 @@ class PageTypeResolver extends AbstractTypeResolver
         return $translationAPI->__('Representation of a page', 'pages');
     }
 
-    public function getId($resultItem)
+    public function getID($resultItem)
     {
         $cmspagesresolver = \PoP\Pages\ObjectPropertyResolverFactory::getInstance();
         $page = $resultItem;

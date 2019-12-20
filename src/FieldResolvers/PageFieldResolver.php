@@ -50,13 +50,13 @@ class PageFieldResolver extends AbstractDBDataFieldResolver
         $page = $resultItem;
         switch ($fieldName) {
             case 'title':
-                return $cmspagesapi->getTitle($typeResolver->getId($page));
+                return $cmspagesapi->getTitle($typeResolver->getID($page));
 
             case 'content':
-                return $cmspagesapi->getContent($typeResolver->getId($page));
+                return $cmspagesapi->getContent($typeResolver->getID($page));
 
             case 'url':
-                return $cmspagesapi->getPageURL($typeResolver->getId($page));
+                return $cmspagesapi->getPageURL($typeResolver->getID($page));
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
