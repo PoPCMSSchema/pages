@@ -5,11 +5,6 @@ use PoP\ComponentModel\TypeDataLoaders\AbstractTypeQueryableDataLoader;
 
 class PageTypeDataLoader extends AbstractTypeQueryableDataLoader
 {
-    public function getDataquery()
-    {
-        return GD_DATAQUERY_PAGE;
-    }
-
     public function getObjects(array $ids): array
     {
         $cmspagesapi = \PoP\Pages\FunctionAPIFactory::getInstance();
