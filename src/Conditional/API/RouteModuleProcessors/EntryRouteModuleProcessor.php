@@ -11,7 +11,7 @@ class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
         $ret = array();
 
         $ret[RouteNatures::PAGE][] = [
-            'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_DATAQUERY_PAGE_FIELDS],
+            'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_RELATIONALFIELDS_PAGE],
             'conditions' => [
                 'scheme' => POP_SCHEME_API,
             ],

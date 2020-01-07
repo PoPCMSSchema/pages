@@ -40,7 +40,7 @@ class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
 
         $vars = Engine_Vars::getVars();
         $ret[RouteNatures::PAGE][] = [
-            'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_DATAQUERY_PAGE_FIELDS, ['fields' => isset($vars['query']) ? $vars['query'] : self::getRESTFields()]],
+            'module' => [\PoP_Pages_Module_Processor_FieldDataloads::class, \PoP_Pages_Module_Processor_FieldDataloads::MODULE_DATALOAD_RELATIONALFIELDS_PAGE, ['fields' => isset($vars['query']) ? $vars['query'] : self::getRESTFields()]],
             'conditions' => [
                 'scheme' => POP_SCHEME_API,
                 'datastructure' => RESTDataStructureFormatter::getName(),
