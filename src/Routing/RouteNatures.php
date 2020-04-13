@@ -1,6 +1,7 @@
 <?php
 namespace PoP\Pages\Routing;
 
-class RouteNatures {
+class RouteNatures
+{
     public const PAGE = 'page';
 }

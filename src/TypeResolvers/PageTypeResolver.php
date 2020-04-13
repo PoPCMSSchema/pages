@@ -32,4 +32,3 @@ class PageTypeResolver extends AbstractTypeResolver
         return PageTypeDataLoader::class;
     }
 }
-

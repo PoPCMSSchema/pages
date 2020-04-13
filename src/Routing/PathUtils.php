@@ -1,7 +1,8 @@
 <?php
 namespace PoP\Pages\Routing;
 
-class PathUtils {
+class PathUtils
+{
 
     public static function getPagePath($page_id)
     {

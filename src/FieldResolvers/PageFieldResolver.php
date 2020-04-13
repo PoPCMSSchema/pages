@@ -17,7 +17,7 @@ class PageFieldResolver extends AbstractDBDataFieldResolver
     public static function getFieldNamesToResolve(): array
     {
         return [
-			'title',
+            'title',
             'content',
             'url',
         ];
@@ -26,7 +26,7 @@ class PageFieldResolver extends AbstractDBDataFieldResolver
     public function getSchemaFieldType(TypeResolverInterface $typeResolver, string $fieldName): ?string
     {
         $types = [
-			'title' => SchemaDefinition::TYPE_STRING,
+            'title' => SchemaDefinition::TYPE_STRING,
             'content' => SchemaDefinition::TYPE_STRING,
             'url' => SchemaDefinition::TYPE_URL,
         ];
@@ -37,7 +37,7 @@ class PageFieldResolver extends AbstractDBDataFieldResolver
     {
         $translationAPI = TranslationAPIFacade::getInstance();
         $descriptions = [
-			'title' => $translationAPI->__('Page\'s title', 'pop-pages'),
+            'title' => $translationAPI->__('Page\'s title', 'pop-pages'),
             'content' => $translationAPI->__('Page\'s content', 'pop-pages'),
             'url' => $translationAPI->__('Page\'s URL', 'pop-pages'),
         ];
