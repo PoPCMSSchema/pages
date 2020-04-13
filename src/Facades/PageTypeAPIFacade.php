@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace PoP\Pages\Facades;
 
 use PoP\Pages\TypeAPIs\PageTypeAPIInterface;
