@@ -25,7 +25,9 @@ composer require getpop/pages
 Initialize the component:
 
 ``` php
-\PoP\Pages\Component::initialize();
+\PoP\Root\ComponentLoader::initializeComponents([
+    \PoP\Pages\Component::class,
+]);
 ```
 
 ## Standards
