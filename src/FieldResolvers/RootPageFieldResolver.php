@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace PoP\Pages\FieldResolvers;
 
-use PoP\Engine\TypeResolvers\RootTypeResolver;
-use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
-use PoP\Translation\Facades\TranslationAPIFacade;
-use PoP\ComponentModel\Schema\SchemaDefinition;
-use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoP\Pages\TypeResolvers\PageTypeResolver;
+use PoP\Engine\TypeResolvers\RootTypeResolver;
+use PoP\ComponentModel\Schema\SchemaDefinition;
+use PoP\ComponentModel\Schema\TypeCastingHelpers;
+use PoP\Translation\Facades\TranslationAPIFacade;
+use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
+use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -22,6 +23,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         return [
             'page',
+            'pages',
         ];
     }
 
@@ -30,6 +32,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
         $translationAPI = TranslationAPIFacade::getInstance();
         $descriptions = [
             'page' => $translationAPI->__('Page with a specific ID', 'pages'),
+            'pages' => $translationAPI->__('Pages', 'pages'),
         ];
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($typeResolver, $fieldName);
     }
@@ -38,6 +41,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         $types = [
             'page' => SchemaDefinition::TYPE_ID,
+            'pages' => TypeCastingHelpers::makeArray(SchemaDefinition::TYPE_ID),
         ];
         return $types[$fieldName] ?? parent::getSchemaFieldType($typeResolver, $fieldName);
     }
@@ -59,8 +63,22 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                         ],
                     ]
                 );
+            case 'pages':
+                return array_merge(
+                    $schemaFieldArgs,
+                    $this->getFieldArgumentsSchemaDefinitions($typeResolver, $fieldName)
+                );
         }
         return $schemaFieldArgs;
+    }
+
+    public function enableOrderedSchemaFieldArgs(TypeResolverInterface $typeResolver, string $fieldName): bool
+    {
+        switch ($fieldName) {
+            case 'pages':
+                return false;
+        }
+        return parent::enableOrderedSchemaFieldArgs($typeResolver, $fieldName);
     }
 
     public function resolveValue(TypeResolverInterface $typeResolver, $resultItem, string $fieldName, array $fieldArgs = [], ?array $variables = null, ?array $expressions = null, array $options = [])
@@ -78,6 +96,15 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     return $pages[0];
                 }
                 return null;
+            case 'pages':
+                $query = [
+                    'limit' => -1,
+                ];
+                $options = [
+                    'return-type' => POP_RETURNTYPE_IDS,
+                ];
+                $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
+                return $cmspagesapi->getPages($query, $options);
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
@@ -87,6 +114,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         switch ($fieldName) {
             case 'page':
+            case 'pages':
                 return PageTypeResolver::class;
         }
 

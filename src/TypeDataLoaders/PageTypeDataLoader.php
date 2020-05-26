@@ -3,11 +3,18 @@
 declare(strict_types=1);
 
 namespace PoP\Pages\TypeDataLoaders;
+
 use PoP\LooseContracts\Facades\NameResolverFacade;
 use PoP\ComponentModel\TypeDataLoaders\AbstractTypeQueryableDataLoader;
+use PoP\Pages\ModuleProcessors\PageRelationalFieldDataloadModuleProcessor;
 
 class PageTypeDataLoader extends AbstractTypeQueryableDataLoader
 {
+    public function getFilterDataloadingModule(): ?array
+    {
+        return [PageRelationalFieldDataloadModuleProcessor::class, PageRelationalFieldDataloadModuleProcessor::MODULE_DATALOAD_RELATIONALFIELDS_PAGES];
+    }
+
     public function getObjects(array $ids): array
     {
         $cmspagesapi = \PoP\Pages\FunctionAPIFactory::getInstance();
