@@ -1,0 +1,8 @@
+services:
+    PoP\Pages\FieldResolvers\:
+        resource: '../src/FieldResolvers/*'
+        public: true
+
+    PoP\Pages\TypeResolvers\:
+        resource: '../src/TypeResolvers/*'
+        public: true
