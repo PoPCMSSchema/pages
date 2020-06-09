@@ -11,6 +11,7 @@ use PoP\ComponentModel\Schema\TypeCastingHelpers;
 use PoP\Translation\Facades\TranslationAPIFacade;
 use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
+use PoP\Pages\ComponentConfiguration;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -98,7 +99,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 return null;
             case 'pages':
                 $query = [
-                    'limit' => -1,
+                    'limit' => ComponentConfiguration::getPageListDefaultLimit(),
                 ];
                 $options = [
                     'return-type' => POP_RETURNTYPE_IDS,
