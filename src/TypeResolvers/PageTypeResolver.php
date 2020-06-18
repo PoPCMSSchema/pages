@@ -6,9 +6,9 @@ namespace PoP\Pages\TypeResolvers;
 
 use PoP\Pages\TypeDataLoaders\PageTypeDataLoader;
 use PoP\Translation\Facades\TranslationAPIFacade;
-use PoP\ComponentModel\TypeResolvers\AbstractTypeResolver;
+use PoP\CustomPosts\TypeResolvers\AbstractCustomPostTypeResolver;
 
-class PageTypeResolver extends AbstractTypeResolver
+class PageTypeResolver extends AbstractCustomPostTypeResolver
 {
     public const NAME = 'Page';
 

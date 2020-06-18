@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PoP\Pages\FieldResolvers;
 
+use PoP\CustomPosts\Types\Status;
+use PoP\Pages\ComponentConfiguration;
 use PoP\Pages\TypeResolvers\PageTypeResolver;
 use PoP\Engine\TypeResolvers\RootTypeResolver;
 use PoP\ComponentModel\Schema\SchemaDefinition;
@@ -11,7 +13,6 @@ use PoP\ComponentModel\Schema\TypeCastingHelpers;
 use PoP\Translation\Facades\TranslationAPIFacade;
 use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
-use PoP\Pages\ComponentConfiguration;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -25,6 +26,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
         return [
             'page',
             'pages',
+            'pageCount',
         ];
     }
 
@@ -34,6 +36,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
         $descriptions = [
             'page' => $translationAPI->__('Page with a specific ID', 'pages'),
             'pages' => $translationAPI->__('Pages', 'pages'),
+            'pageCount' => $translationAPI->__('Number of pages', 'pages'),
         ];
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($typeResolver, $fieldName);
     }
@@ -43,6 +46,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
         $types = [
             'page' => SchemaDefinition::TYPE_ID,
             'pages' => TypeCastingHelpers::makeArray(SchemaDefinition::TYPE_ID),
+            'pageCount' => SchemaDefinition::TYPE_INT,
         ];
         return $types[$fieldName] ?? parent::getSchemaFieldType($typeResolver, $fieldName);
     }
@@ -51,6 +55,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         $nonNullableFieldNames = [
             'pages',
+            'pageCount',
         ];
         if (in_array($fieldName, $nonNullableFieldNames)) {
             return true;
@@ -76,6 +81,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     ]
                 );
             case 'pages':
+            case 'pageCount':
                 return array_merge(
                     $schemaFieldArgs,
                     $this->getFieldArgumentsSchemaDefinitions($typeResolver, $fieldName)
@@ -88,9 +94,19 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         switch ($fieldName) {
             case 'pages':
+            case 'pageCount':
                 return false;
         }
         return parent::enableOrderedSchemaFieldArgs($typeResolver, $fieldName);
+    }
+
+    protected function getFieldDefaultFilterDataloadingModule(TypeResolverInterface $typeResolver, string $fieldName, array $fieldArgs = []): ?array
+    {
+        switch ($fieldName) {
+            case 'pageCount':
+                return [\PoP_Posts_Module_Processor_FieldDataloads::class, \PoP_Posts_Module_Processor_FieldDataloads::MODULE_DATALOAD_RELATIONALFIELDS_POSTCOUNT];
+        }
+        return parent::getFieldDefaultFilterDataloadingModule($typeResolver, $fieldName, $fieldArgs);
     }
 
     public function resolveValue(TypeResolverInterface $typeResolver, $resultItem, string $fieldName, array $fieldArgs = [], ?array $variables = null, ?array $expressions = null, array $options = [])
@@ -100,6 +116,9 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'page':
                 $query = [
                     'include' => [$fieldArgs['id']],
+                    'post-status' => [
+                        Status::PUBLISHED,
+                    ],
                 ];
                 $options = [
                     'return-type' => POP_RETURNTYPE_IDS,
@@ -111,12 +130,24 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'pages':
                 $query = [
                     'limit' => ComponentConfiguration::getPageListDefaultLimit(),
+                    'post-status' => [
+                        Status::PUBLISHED,
+                    ],
                 ];
                 $options = [
                     'return-type' => POP_RETURNTYPE_IDS,
                 ];
                 $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
                 return $cmspagesapi->getPages($query, $options);
+            case 'pageCount':
+                $query = [
+                    'post-status' => [
+                        Status::PUBLISHED,
+                    ],
+                ];
+                $options = [];
+                $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
+                return $cmspagesapi->getPageCount($query, $options);
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);

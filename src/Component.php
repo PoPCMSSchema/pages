@@ -8,6 +8,8 @@ use PoP\Root\Component\AbstractComponent;
 use PoP\Root\Component\YAMLServicesTrait;
 use PoP\Pages\Config\ServiceConfiguration;
 use PoP\ComponentModel\Container\ContainerBuilderUtils;
+use PoP\ComponentModel\AttachableExtensions\AttachableExtensionGroups;
+use PoP\Pages\TypeResolverPickers\Optional\PageCustomPostTypeResolverPicker;
 
 /**
  * Initialize component
@@ -20,7 +22,7 @@ class Component extends AbstractComponent
     public static function getDependedComponentClasses(): array
     {
         return [
-            \PoP\QueriedObject\Component::class,
+            \PoP\CustomPosts\Component::class,
         ];
     }
 
@@ -71,5 +73,21 @@ class Component extends AbstractComponent
         // Initialize classes
         ContainerBuilderUtils::registerTypeResolversFromNamespace(__NAMESPACE__ . '\\TypeResolvers');
         ContainerBuilderUtils::attachFieldResolversFromNamespace(__NAMESPACE__ . '\\FieldResolvers');
+        self::attachTypeResolverPickers();
+    }
+
+    /**
+     * If enabled, load the TypeResolverPickers
+     *
+     * @return void
+     */
+    protected static function attachTypeResolverPickers()
+    {
+        if (Environment::addPageTypeToCustomPostUnionTypes()
+            // If $skipSchema is `true`, then services are not registered
+            && !empty(ContainerBuilderUtils::getServiceClassesUnderNamespace(__NAMESPACE__ . '\\TypeResolverPickers'))
+        ) {
+            PageCustomPostTypeResolverPicker::attach(AttachableExtensionGroups::TYPERESOLVERPICKERS);
+        }
     }
 }
