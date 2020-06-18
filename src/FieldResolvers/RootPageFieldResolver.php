@@ -14,6 +14,7 @@ use PoP\ComponentModel\Schema\TypeCastingHelpers;
 use PoP\Translation\Facades\TranslationAPIFacade;
 use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
+use PoP\CustomPosts\ModuleProcessors\CustomPostRelationalFieldDataloadModuleProcessor;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -105,7 +106,10 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         switch ($fieldName) {
             case 'pageCount':
-                return [\PoP_Posts_Module_Processor_FieldDataloads::class, \PoP_Posts_Module_Processor_FieldDataloads::MODULE_DATALOAD_RELATIONALFIELDS_POSTCOUNT];
+                return [
+                    CustomPostRelationalFieldDataloadModuleProcessor::class,
+                    CustomPostRelationalFieldDataloadModuleProcessor::MODULE_DATALOAD_RELATIONALFIELDS_CUSTOMPOSTCOUNT
+                ];
         }
         return parent::getFieldDefaultFilterDataloadingModule($typeResolver, $fieldName, $fieldArgs);
     }
