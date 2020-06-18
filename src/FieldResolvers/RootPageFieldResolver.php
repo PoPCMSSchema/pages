@@ -108,7 +108,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'pageCount':
                 return [
                     CustomPostRelationalFieldDataloadModuleProcessor::class,
-                    CustomPostRelationalFieldDataloadModuleProcessor::MODULE_DATALOAD_RELATIONALFIELDS_IMPLEMENTINGCUSTOMPOSTCOUNT
+                    CustomPostRelationalFieldDataloadModuleProcessor::MODULE_DATALOAD_RELATIONALFIELDS_CUSTOMPOSTCOUNT
                 ];
         }
         return parent::getFieldDefaultFilterDataloadingModule($typeResolver, $fieldName, $fieldArgs);
