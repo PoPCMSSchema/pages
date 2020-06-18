@@ -121,7 +121,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'page':
                 $query = [
                     'include' => [$fieldArgs['id']],
-                    'post-status' => [
+                    'custom-post-status' => [
                         Status::PUBLISHED,
                     ],
                 ];
@@ -135,7 +135,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'pages':
                 $query = [
                     'limit' => ComponentConfiguration::getPageListDefaultLimit(),
-                    'post-status' => [
+                    'custom-post-status' => [
                         Status::PUBLISHED,
                     ],
                 ];
@@ -146,7 +146,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 return $pageTypeAPI->getPages($query, $options);
             case 'pageCount':
                 $query = [
-                    'post-status' => [
+                    'custom-post-status' => [
                         Status::PUBLISHED,
                     ],
                 ];
