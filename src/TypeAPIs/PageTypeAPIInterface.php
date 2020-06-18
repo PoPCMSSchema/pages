@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace PoP\Pages\TypeAPIs;
 
+use PoP\CustomPosts\TypeAPIs\CustomPostTypeAPIInterface;
+
 /**
  * Methods to interact with the Type, to be implemented by the underlying CMS
  */
-interface PageTypeAPIInterface
+interface PageTypeAPIInterface extends CustomPostTypeAPIInterface
 {
     /**
      * Indicates if the passed object is of type Page
@@ -52,4 +54,11 @@ interface PageTypeAPIInterface
      * @return string
      */
     public function getPageCustomPostType(): string;
+    /**
+     * Get the ID of the static page for the homepage
+     * Returns an ID (int? string?) or null
+     *
+     * @return null|ID
+     */
+    public function getHomeStaticPageID();
 }

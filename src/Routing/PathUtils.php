@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace PoP\Pages\Routing;
 
+use PoP\Pages\Facades\PageTypeAPIFacade;
+
 class PathUtils
 {
-
     public static function getPagePath($page_id)
     {
         $cmsengineapi = \PoP\Engine\FunctionAPIFactory::getInstance();
-        $cmspagesapi = \PoP\Pages\FunctionAPIFactory::getInstance();
+        $pageTypeAPI = PageTypeAPIFacade::getInstance();
 
         // Generate the page path. Eg: http://mesym.com/events/past/ will render events/past
-        $permalink = $cmspagesapi->getPageURL($page_id);
+        $permalink = $pageTypeAPI->getPermalink($page_id);
 
         $domain = $cmsengineapi->getHomeURL();
 

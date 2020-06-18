@@ -6,6 +6,7 @@ namespace PoP\Pages\FieldResolvers;
 
 use PoP\CustomPosts\Types\Status;
 use PoP\Pages\ComponentConfiguration;
+use PoP\Pages\Facades\PageTypeAPIFacade;
 use PoP\Pages\TypeResolvers\PageTypeResolver;
 use PoP\Engine\TypeResolvers\RootTypeResolver;
 use PoP\ComponentModel\Schema\SchemaDefinition;
@@ -111,7 +112,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
 
     public function resolveValue(TypeResolverInterface $typeResolver, $resultItem, string $fieldName, array $fieldArgs = [], ?array $variables = null, ?array $expressions = null, array $options = [])
     {
-        $cmspagesapi = \PoP\Pages\FunctionAPIFactory::getInstance();
+        $pageTypeAPI = PageTypeAPIFacade::getInstance();
         switch ($fieldName) {
             case 'page':
                 $query = [
@@ -123,7 +124,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 $options = [
                     'return-type' => POP_RETURNTYPE_IDS,
                 ];
-                if ($pages = $cmspagesapi->getPages($query, $options)) {
+                if ($pages = $pageTypeAPI->getPages($query, $options)) {
                     return $pages[0];
                 }
                 return null;
@@ -138,7 +139,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     'return-type' => POP_RETURNTYPE_IDS,
                 ];
                 $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
-                return $cmspagesapi->getPages($query, $options);
+                return $pageTypeAPI->getPages($query, $options);
             case 'pageCount':
                 $query = [
                     'post-status' => [
@@ -147,7 +148,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 ];
                 $options = [];
                 $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
-                return $cmspagesapi->getPageCount($query, $options);
+                return $pageTypeAPI->getPageCount($query, $options);
         }
 
         return parent::resolveValue($typeResolver, $resultItem, $fieldName, $fieldArgs, $variables, $expressions, $options);
