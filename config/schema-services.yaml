@@ -3,6 +3,10 @@ services:
         resource: '../src/FieldResolvers/*'
         public: true
 
+    PoP\Pages\TypeResolverPickers\:
+        resource: '../src/TypeResolverPickers/*'
+        public: true
+
     PoP\Pages\TypeResolvers\:
         resource: '../src/TypeResolvers/*'
         public: true
