@@ -83,7 +83,7 @@ class Component extends AbstractComponent
      */
     protected static function attachTypeResolverPickers()
     {
-        if (Environment::addPageTypeToCustomPostUnionTypes()
+        if (ComponentConfiguration::addPageTypeToCustomPostUnionTypes()
             // If $skipSchema is `true`, then services are not registered
             && !empty(ContainerBuilderUtils::getServiceClassesUnderNamespace(__NAMESPACE__ . '\\TypeResolverPickers'))
         ) {
