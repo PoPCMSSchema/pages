@@ -12,7 +12,7 @@ class ComponentConfiguration
     use ComponentConfigurationTrait;
 
     private static $getPageListDefaultLimit;
-    // private static $getPageListMaxLimit;
+    private static $getPageListMaxLimit;
     private static $addPageTypeToCustomPostUnionTypes;
 
     public static function getPageListDefaultLimit(): ?int
@@ -33,23 +33,23 @@ class ComponentConfiguration
         return $selfProperty;
     }
 
-    // public static function getPageListMaxLimit(): ?int
-    // {
-    //     // Define properties
-    //     $envVariable = Environment::PAGE_LIST_MAX_LIMIT;
-    //     $selfProperty = &self::$getPageListMaxLimit;
-    //     $defaultValue = -1; // Unlimited
-    //     $callback = [EnvironmentValueHelpers::class, 'toInt'];
+    public static function getPageListMaxLimit(): ?int
+    {
+        // Define properties
+        $envVariable = Environment::PAGE_LIST_MAX_LIMIT;
+        $selfProperty = &self::$getPageListMaxLimit;
+        $defaultValue = -1; // Unlimited
+        $callback = [EnvironmentValueHelpers::class, 'toInt'];
 
-    //     // Initialize property from the environment/hook
-    //     self::maybeInitializeConfigurationValue(
-    //         $envVariable,
-    //         $selfProperty,
-    //         $defaultValue,
-    //         $callback
-    //     );
-    //     return $selfProperty;
-    // }
+        // Initialize property from the environment/hook
+        self::maybeInitializeConfigurationValue(
+            $envVariable,
+            $selfProperty,
+            $defaultValue,
+            $callback
+        );
+        return $selfProperty;
+    }
 
     public static function addPageTypeToCustomPostUnionTypes(): bool
     {
