@@ -31,7 +31,7 @@ interface PageTypeAPIInterface extends CustomPostTypeAPIInterface
      * @param int $id
      * @return void
      */
-    public function getPage($id): ?object;
+    public function getPage($id);
     /**
      * Get the list of pages
      *
