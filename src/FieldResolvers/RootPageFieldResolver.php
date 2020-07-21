@@ -126,7 +126,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     ],
                 ];
                 $options = [
-                    'return-type' => POP_RETURNTYPE_IDS,
+                    'return-type' => \POP_RETURNTYPE_IDS,
                 ];
                 if ($pages = $pageTypeAPI->getPages($query, $options)) {
                     return $pages[0];
@@ -140,7 +140,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     ],
                 ];
                 $options = [
-                    'return-type' => POP_RETURNTYPE_IDS,
+                    'return-type' => \POP_RETURNTYPE_IDS,
                 ];
                 $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
                 return $pageTypeAPI->getPages($query, $options);
