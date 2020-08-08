@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\TypeDataLoaders;
+namespace PoPSchema\Pages\TypeDataLoaders;
 
-use PoP\Pages\Facades\PageTypeAPIFacade;
-use PoP\CustomPosts\TypeDataLoaders\AbstractCustomPostTypeDataLoader;
+use PoPSchema\Pages\Facades\PageTypeAPIFacade;
+use PoPSchema\CustomPosts\TypeDataLoaders\AbstractCustomPostTypeDataLoader;
 
 class PageTypeDataLoader extends AbstractCustomPostTypeDataLoader
 {

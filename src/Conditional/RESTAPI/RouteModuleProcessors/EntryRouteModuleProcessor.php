@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\Conditional\RESTAPI\RouteModuleProcessors;
+namespace PoPSchema\Pages\Conditional\RESTAPI\RouteModuleProcessors;
 
 use PoP\ModuleRouting\AbstractEntryRouteModuleProcessor;
 use PoP\ComponentModel\State\ApplicationState;
 use PoP\Hooks\Facades\HooksAPIFacade;
 use PoP\API\Facades\FieldQueryConvertorFacade;
-use PoP\Pages\Routing\RouteNatures;
+use PoPSchema\Pages\Routing\RouteNatures;
 use PoP\RESTAPI\DataStructureFormatters\RESTDataStructureFormatter;
 
 class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor

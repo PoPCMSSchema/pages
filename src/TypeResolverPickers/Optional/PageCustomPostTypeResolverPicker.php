@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\TypeResolverPickers\Optional;
+namespace PoPSchema\Pages\TypeResolverPickers\Optional;
 
-use PoP\CustomPosts\TypeResolvers\CustomPostUnionTypeResolver;
-use PoP\Pages\TypeResolverPickers\AbstractPageTypeResolverPicker;
+use PoPSchema\CustomPosts\TypeResolvers\CustomPostUnionTypeResolver;
+use PoPSchema\Pages\TypeResolverPickers\AbstractPageTypeResolverPicker;
 
 class PageCustomPostTypeResolverPicker extends AbstractPageTypeResolverPicker
 {

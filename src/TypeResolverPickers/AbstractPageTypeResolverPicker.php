@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\TypeResolverPickers;
+namespace PoPSchema\Pages\TypeResolverPickers;
 
 use PoP\ComponentModel\TypeResolverPickers\AbstractTypeResolverPicker;
-use PoP\Pages\Facades\PageTypeAPIFacade;
-use PoP\Pages\TypeResolvers\PageTypeResolver;
+use PoPSchema\Pages\Facades\PageTypeAPIFacade;
+use PoPSchema\Pages\TypeResolvers\PageTypeResolver;
 
 abstract class AbstractPageTypeResolverPicker extends AbstractTypeResolverPicker
 {

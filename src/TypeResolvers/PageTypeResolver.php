@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\TypeResolvers;
+namespace PoPSchema\Pages\TypeResolvers;
 
-use PoP\Pages\TypeDataLoaders\PageTypeDataLoader;
+use PoPSchema\Pages\TypeDataLoaders\PageTypeDataLoader;
 use PoP\Translation\Facades\TranslationAPIFacade;
-use PoP\CustomPosts\TypeResolvers\AbstractCustomPostTypeResolver;
+use PoPSchema\CustomPosts\TypeResolvers\AbstractCustomPostTypeResolver;
 
 class PageTypeResolver extends AbstractCustomPostTypeResolver
 {
@@ -25,7 +25,7 @@ class PageTypeResolver extends AbstractCustomPostTypeResolver
 
     public function getID($resultItem)
     {
-        $cmspagesresolver = \PoP\Pages\ObjectPropertyResolverFactory::getInstance();
+        $cmspagesresolver = \PoPSchema\Pages\ObjectPropertyResolverFactory::getInstance();
         $page = $resultItem;
         return $cmspagesresolver->getPageId($page);
     }

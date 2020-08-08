@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages;
+namespace PoPSchema\Pages;
 
 use PoP\Root\Component\AbstractComponent;
 use PoP\Root\Component\YAMLServicesTrait;
-use PoP\Pages\Config\ServiceConfiguration;
+use PoPSchema\Pages\Config\ServiceConfiguration;
 use PoP\ComponentModel\Container\ContainerBuilderUtils;
 use PoP\ComponentModel\AttachableExtensions\AttachableExtensionGroups;
-use PoP\Pages\TypeResolverPickers\Optional\PageCustomPostTypeResolverPicker;
+use PoPSchema\Pages\TypeResolverPickers\Optional\PageCustomPostTypeResolverPicker;
 
 /**
  * Initialize component
@@ -22,7 +22,7 @@ class Component extends AbstractComponent
     public static function getDependedComponentClasses(): array
     {
         return [
-            \PoP\CustomPosts\Component::class,
+            \PoPSchema\CustomPosts\Component::class,
         ];
     }
 

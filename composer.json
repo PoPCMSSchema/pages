@@ -1,5 +1,5 @@
 {
-    "name": "getpop/pages",
+    "name": "pop-schema/pages",
     "type": "library",
     "description": "Adds support for pages",
     "keywords": [
@@ -19,8 +19,8 @@
     "prefer-stable": true,
     "require": {
         "php": "~7.2",
-        "getpop/customposts": "dev-master",
-        "getpop/migrate-pages": "dev-master"
+        "pop-schema/customposts": "dev-master",
+        "pop-schema/migrate-pages": "dev-master"
     },
     "require-dev": {
         "getpop/api": "dev-master",
@@ -35,12 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PoP\\Pages\\": "src"
+            "PoPSchema\\Pages\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PoP\\Pages\\": "tests"
+            "PoPSchema\\Pages\\": "tests"
         }
     },
     "scripts": {

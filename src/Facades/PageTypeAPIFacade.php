@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\Facades;
+namespace PoPSchema\Pages\Facades;
 
-use PoP\Pages\TypeAPIs\PageTypeAPIInterface;
+use PoPSchema\Pages\TypeAPIs\PageTypeAPIInterface;
 use PoP\Root\Container\ContainerBuilderFactory;
 
 class PageTypeAPIFacade

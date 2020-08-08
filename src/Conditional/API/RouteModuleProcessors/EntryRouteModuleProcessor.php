@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\Conditional\API\RouteModuleProcessors;
+namespace PoPSchema\Pages\Conditional\API\RouteModuleProcessors;
 
 use PoP\ModuleRouting\AbstractEntryRouteModuleProcessor;
-use PoP\Pages\Routing\RouteNatures;
+use PoPSchema\Pages\Routing\RouteNatures;
 
 class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
 {

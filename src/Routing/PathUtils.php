@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace PoP\Pages\Routing;
+namespace PoPSchema\Pages\Routing;
 
-use PoP\Pages\Facades\PageTypeAPIFacade;
+use PoPSchema\Pages\Facades\PageTypeAPIFacade;
 
 class PathUtils
 {
