@@ -42,7 +42,7 @@ class Component extends AbstractComponent
     public static function getDependedMigrationPlugins(): array
     {
         return [
-            'migrate-pages',
+            'pop-schema/migrate-pages',
         ];
     }
 
