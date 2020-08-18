@@ -15,6 +15,7 @@ use PoP\Translation\Facades\TranslationAPIFacade;
 use PoP\ComponentModel\TypeResolvers\TypeResolverInterface;
 use PoP\ComponentModel\FieldResolvers\AbstractQueryableFieldResolver;
 use PoPSchema\CustomPosts\ModuleProcessors\CustomPostRelationalFieldDataloadModuleProcessor;
+use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -126,7 +127,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     ],
                 ];
                 $options = [
-                    'return-type' => \POP_RETURNTYPE_IDS,
+                    'return-type' => ReturnTypes::IDS,
                 ];
                 if ($pages = $pageTypeAPI->getPages($query, $options)) {
                     return $pages[0];
@@ -140,7 +141,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                     ],
                 ];
                 $options = [
-                    'return-type' => \POP_RETURNTYPE_IDS,
+                    'return-type' => ReturnTypes::IDS,
                 ];
                 $this->addFilterDataloadQueryArgs($options, $typeResolver, $fieldName, $fieldArgs);
                 return $pageTypeAPI->getPages($query, $options);
