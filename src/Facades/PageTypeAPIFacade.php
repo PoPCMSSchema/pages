@@ -11,6 +11,10 @@ class PageTypeAPIFacade
 {
     public static function getInstance(): PageTypeAPIInterface
     {
-        return ContainerBuilderFactory::getInstance()->get('page_type_api');
+        /**
+         * @var PageTypeAPIInterface
+         */
+        $service = ContainerBuilderFactory::getInstance()->get('page_type_api');
+        return $service;
     }
 }
