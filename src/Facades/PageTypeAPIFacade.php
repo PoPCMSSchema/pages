@@ -14,7 +14,7 @@ class PageTypeAPIFacade
         /**
          * @var PageTypeAPIInterface
          */
-        $service = ContainerBuilderFactory::getInstance()->get('page_type_api');
+        $service = ContainerBuilderFactory::getInstance()->get(PageTypeAPIInterface::class);
         return $service;
     }
 }
