@@ -10,7 +10,10 @@ use PoP\API\Response\Schemes as APISchemes;
 
 class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
 {
-    public function getModulesVarsPropertiesByNature()
+    /**
+     * @return array<string, array<array>>
+     */
+    public function getModulesVarsPropertiesByNature(): array
     {
         $ret = array();
 

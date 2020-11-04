@@ -40,7 +40,10 @@ class EntryRouteModuleProcessor extends AbstractEntryRouteModuleProcessor
         return self::$restFieldsQuery;
     }
 
-    public function getModulesVarsPropertiesByNature()
+    /**
+     * @return array<string, array<array>>
+     */
+    public function getModulesVarsPropertiesByNature(): array
     {
         $ret = array();
 
