@@ -18,6 +18,7 @@ use PoPSchema\Pages\TypeResolvers\PageTypeResolver;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
 use PoPSchema\SchemaCommons\ModuleProcessors\CommonFilterInputContainerModuleProcessor;
 use PoPSchema\SchemaCommons\ModuleProcessors\FormInputs\CommonFilterInputModuleProcessor;
+use PoPSchema\SchemaCommons\Constants\QueryOptions;
 
 class RootPageFieldResolver extends AbstractQueryableFieldResolver
 {
@@ -33,20 +34,20 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             'pageBySlug',
             'pages',
             'pageCount',
-            'unrestrictedPage',
-            'unrestrictedPageBySlug',
-            'unrestrictedPages',
-            'unrestrictedPageCount',
+            'pageForAdmin',
+            'pageBySlugForAdmin',
+            'pagesForAdmin',
+            'pageCountForAdmin',
         ];
     }
 
     public function getAdminFieldNames(): array
     {
         return [
-            'unrestrictedPage',
-            'unrestrictedPageBySlug',
-            'unrestrictedPages',
-            'unrestrictedPageCount',
+            'pageForAdmin',
+            'pageBySlugForAdmin',
+            'pagesForAdmin',
+            'pageCountForAdmin',
         ];
     }
 
@@ -57,10 +58,10 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             'pageBySlug' => $this->translationAPI->__('Page with a specific slug', 'pages'),
             'pages' => $this->translationAPI->__('Pages', 'pages'),
             'pageCount' => $this->translationAPI->__('Number of pages', 'pages'),
-            'unrestrictedPage' => $this->translationAPI->__('[Unrestricted] Page with a specific ID', 'pages'),
-            'unrestrictedPageBySlug' => $this->translationAPI->__('[Unrestricted] Page with a specific slug', 'pages'),
-            'unrestrictedPages' => $this->translationAPI->__('[Unrestricted] Pages', 'pages'),
-            'unrestrictedPageCount' => $this->translationAPI->__('[Unrestricted] Number of pages', 'pages'),
+            'pageForAdmin' => $this->translationAPI->__('[Unrestricted] Page with a specific ID', 'pages'),
+            'pageBySlugForAdmin' => $this->translationAPI->__('[Unrestricted] Page with a specific slug', 'pages'),
+            'pagesForAdmin' => $this->translationAPI->__('[Unrestricted] Pages', 'pages'),
+            'pageCountForAdmin' => $this->translationAPI->__('[Unrestricted] Number of pages', 'pages'),
         ];
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($typeResolver, $fieldName);
     }
@@ -72,10 +73,10 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             'pageBySlug' => SchemaDefinition::TYPE_ID,
             'pages' => SchemaDefinition::TYPE_ID,
             'pageCount' => SchemaDefinition::TYPE_INT,
-            'unrestrictedPage' => SchemaDefinition::TYPE_ID,
-            'unrestrictedPageBySlug' => SchemaDefinition::TYPE_ID,
-            'unrestrictedPages' => SchemaDefinition::TYPE_ID,
-            'unrestrictedPageCount' => SchemaDefinition::TYPE_INT,
+            'pageForAdmin' => SchemaDefinition::TYPE_ID,
+            'pageBySlugForAdmin' => SchemaDefinition::TYPE_ID,
+            'pagesForAdmin' => SchemaDefinition::TYPE_ID,
+            'pageCountForAdmin' => SchemaDefinition::TYPE_INT,
         ];
         return $types[$fieldName] ?? parent::getSchemaFieldType($typeResolver, $fieldName);
     }
@@ -84,10 +85,10 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         return match ($fieldName) {
             'pageCount',
-            'unrestrictedPageCount'
+            'pageCountForAdmin'
                 => SchemaTypeModifiers::NON_NULLABLE,
             'pages',
-            'unrestrictedPages'
+            'pagesForAdmin'
                 => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
             default
                 => parent::getSchemaFieldTypeModifiers($typeResolver, $fieldName),
@@ -105,11 +106,11 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 PageFilterInputContainerModuleProcessor::class,
                 PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_PAGELISTCOUNT
             ],
-            'unrestrictedPages' => [
+            'pagesForAdmin' => [
                 PageFilterInputContainerModuleProcessor::class,
                 PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINPAGELISTLIST
             ],
-            'unrestrictedPageCount' => [
+            'pageCountForAdmin' => [
                 PageFilterInputContainerModuleProcessor::class,
                 PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINPAGELISTCOUNT
             ],
@@ -117,7 +118,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 CommonFilterInputContainerModuleProcessor::class,
                 CommonFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ENTITY_BY_ID
             ],
-            'unrestrictedPage' => [
+            'pageForAdmin' => [
                 CommonCustomPostFilterInputContainerModuleProcessor::class,
                 CommonCustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOST_BY_ID_STATUS
             ],
@@ -125,7 +126,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
                 CommonFilterInputContainerModuleProcessor::class,
                 CommonFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ENTITY_BY_SLUG
             ],
-            'unrestrictedPageBySlug' => [
+            'pageBySlugForAdmin' => [
                 CommonCustomPostFilterInputContainerModuleProcessor::class,
                 CommonCustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOST_BY_SLUG_STATUS
             ],
@@ -137,7 +138,7 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
     {
         switch ($fieldName) {
             case 'pages':
-            case 'unrestrictedPages':
+            case 'pagesForAdmin':
                 $limitFilterInputName = FilterInputHelper::getFilterInputName([
                     CommonFilterInputModuleProcessor::class,
                     CommonFilterInputModuleProcessor::MODULE_FILTERINPUT_LIMIT
@@ -169,17 +170,17 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
         switch ($fieldName) {
             case 'page':
             case 'pageBySlug':
-            case 'unrestrictedPage':
-            case 'unrestrictedPageBySlug':
-                if ($pages = $pageTypeAPI->getPages($query, ['return-type' => ReturnTypes::IDS])) {
+            case 'pageForAdmin':
+            case 'pageBySlugForAdmin':
+                if ($pages = $pageTypeAPI->getPages($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS])) {
                     return $pages[0];
                 }
                 return null;
             case 'pages':
-            case 'unrestrictedPages':
-                return $pageTypeAPI->getPages($query, ['return-type' => ReturnTypes::IDS]);
+            case 'pagesForAdmin':
+                return $pageTypeAPI->getPages($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
             case 'pageCount':
-            case 'unrestrictedPageCount':
+            case 'pageCountForAdmin':
                 return $pageTypeAPI->getPageCount($query);
         }
 
@@ -192,9 +193,9 @@ class RootPageFieldResolver extends AbstractQueryableFieldResolver
             case 'page':
             case 'pageBySlug':
             case 'pages':
-            case 'unrestrictedPage':
-            case 'unrestrictedPageBySlug':
-            case 'unrestrictedPages':
+            case 'pageForAdmin':
+            case 'pageBySlugForAdmin':
+            case 'pagesForAdmin':
                 return PageTypeResolver::class;
         }
 
