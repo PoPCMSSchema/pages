@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\Pages\TypeResolvers;
+namespace PoPSchema\Pages\TypeResolvers\Object;
 
 use PoP\ComponentModel\ErrorHandling\ErrorProviderInterface;
 use PoP\ComponentModel\Instances\InstanceManagerInterface;
@@ -12,7 +12,7 @@ use PoP\ComponentModel\Schema\SchemaDefinitionServiceInterface;
 use PoP\ComponentModel\Schema\SchemaNamespacingServiceInterface;
 use PoP\Hooks\HooksAPIInterface;
 use PoP\Translation\TranslationAPIInterface;
-use PoPSchema\CustomPosts\TypeResolvers\AbstractCustomPostTypeResolver;
+use PoPSchema\CustomPosts\TypeResolvers\Object\AbstractCustomPostTypeResolver;
 use PoPSchema\Pages\TypeAPIs\PageTypeAPIInterface;
 use PoPSchema\Pages\TypeDataLoaders\PageTypeDataLoader;
 
