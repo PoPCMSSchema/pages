@@ -4,58 +4,69 @@ declare(strict_types=1);
 
 namespace PoPSchema\Pages\FieldResolvers\ObjectType;
 
-use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableFieldResolver;
+use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\FilterInput\FilterInputHelper;
 use PoP\ComponentModel\Schema\SchemaDefinition;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
-use PoPSchema\CustomPosts\ModuleProcessors\CustomPostFilterInputContainerModuleProcessor;
+use PoP\Engine\TypeResolvers\ObjectType\RootTypeResolver;
+use PoPSchema\CustomPosts\ModuleProcessors\CommonCustomPostFilterInputContainerModuleProcessor;
 use PoPSchema\Pages\ComponentConfiguration;
 use PoPSchema\Pages\Facades\PageTypeAPIFacade;
+use PoPSchema\Pages\ModuleProcessors\PageFilterInputContainerModuleProcessor;
 use PoPSchema\Pages\TypeResolvers\ObjectType\PageTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
 use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPSchema\SchemaCommons\ModuleProcessors\CommonFilterInputContainerModuleProcessor;
 use PoPSchema\SchemaCommons\ModuleProcessors\FormInputs\CommonFilterInputModuleProcessor;
 use PoPSchema\SchemaCommons\Resolvers\WithLimitFieldArgResolverTrait;
 
-class PageFieldResolver extends AbstractQueryableFieldResolver
+class RootPageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
 {
     use WithLimitFieldArgResolverTrait;
 
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
-            PageTypeResolver::class,
+            RootTypeResolver::class,
         ];
     }
 
     public function getFieldNamesToResolve(): array
     {
         return [
-            'parentPage',
-            'childPages',
-            'childPageCount',
-            'childPagesForAdmin',
-            'childPageCountForAdmin',
+            'page',
+            'pageBySlug',
+            'pages',
+            'pageCount',
+            'pageForAdmin',
+            'pageBySlugForAdmin',
+            'pagesForAdmin',
+            'pageCountForAdmin',
         ];
     }
 
     public function getAdminFieldNames(): array
     {
         return [
-            'childPagesForAdmin',
-            'childPageCountForAdmin',
+            'pageForAdmin',
+            'pageBySlugForAdmin',
+            'pagesForAdmin',
+            'pageCountForAdmin',
         ];
     }
 
     public function getSchemaFieldDescription(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         $descriptions = [
-            'parentPage' => $this->translationAPI->__('Parent page', 'pages'),
-            'childPages' => $this->translationAPI->__('Child pages', 'pages'),
-            'childPageCount' => $this->translationAPI->__('Number of child pages', 'pages'),
-            'childPagesForAdmin' => $this->translationAPI->__('[Unrestricted] Child pages', 'pages'),
-            'childPageCountForAdmin' => $this->translationAPI->__('[Unrestricted] Number of child pages', 'pages'),
+            'page' => $this->translationAPI->__('Page with a specific ID', 'pages'),
+            'pageBySlug' => $this->translationAPI->__('Page with a specific slug', 'pages'),
+            'pages' => $this->translationAPI->__('Pages', 'pages'),
+            'pageCount' => $this->translationAPI->__('Number of pages', 'pages'),
+            'pageForAdmin' => $this->translationAPI->__('[Unrestricted] Page with a specific ID', 'pages'),
+            'pageBySlugForAdmin' => $this->translationAPI->__('[Unrestricted] Page with a specific slug', 'pages'),
+            'pagesForAdmin' => $this->translationAPI->__('[Unrestricted] Pages', 'pages'),
+            'pageCountForAdmin' => $this->translationAPI->__('[Unrestricted] Number of pages', 'pages'),
         ];
         return $descriptions[$fieldName] ?? parent::getSchemaFieldDescription($objectTypeResolver, $fieldName);
     }
@@ -63,8 +74,8 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
     public function getSchemaFieldType(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): string
     {
         $types = [
-            'childPageCount' => SchemaDefinition::TYPE_INT,
-            'childPageCountForAdmin' => SchemaDefinition::TYPE_INT,
+            'pageCount' => SchemaDefinition::TYPE_INT,
+            'pageCountForAdmin' => SchemaDefinition::TYPE_INT,
         ];
         return $types[$fieldName] ?? parent::getSchemaFieldType($objectTypeResolver, $fieldName);
     }
@@ -72,11 +83,11 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
     public function getSchemaFieldTypeModifiers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?int
     {
         return match ($fieldName) {
-            'childPageCount',
-            'childPageCountForAdmin'
+            'pageCount',
+            'pageCountForAdmin'
                 => SchemaTypeModifiers::NON_NULLABLE,
-            'childPages',
-            'childPagesForAdmin'
+            'pages',
+            'pagesForAdmin'
                 => SchemaTypeModifiers::NON_NULLABLE | SchemaTypeModifiers::IS_ARRAY,
             default
                 => parent::getSchemaFieldTypeModifiers($objectTypeResolver, $fieldName),
@@ -86,21 +97,37 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
     public function getFieldDataFilteringModule(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?array
     {
         return match ($fieldName) {
-            'childPages' => [
-                CustomPostFilterInputContainerModuleProcessor::class,
-                CustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOSTLISTLIST
+            'pages' => [
+                PageFilterInputContainerModuleProcessor::class,
+                PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_PAGELISTLIST
             ],
-            'childPageCount' => [
-                CustomPostFilterInputContainerModuleProcessor::class,
-                CustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOSTLISTCOUNT
+            'pageCount' => [
+                PageFilterInputContainerModuleProcessor::class,
+                PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_PAGELISTCOUNT
             ],
-            'childPagesForAdmin' => [
-                CustomPostFilterInputContainerModuleProcessor::class,
-                CustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINCUSTOMPOSTLISTLIST
+            'pagesForAdmin' => [
+                PageFilterInputContainerModuleProcessor::class,
+                PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINPAGELISTLIST
             ],
-            'childPageCountForAdmin' => [
-                CustomPostFilterInputContainerModuleProcessor::class,
-                CustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINCUSTOMPOSTLISTCOUNT
+            'pageCountForAdmin' => [
+                PageFilterInputContainerModuleProcessor::class,
+                PageFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ADMINPAGELISTCOUNT
+            ],
+            'page' => [
+                CommonFilterInputContainerModuleProcessor::class,
+                CommonFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ENTITY_BY_ID
+            ],
+            'pageForAdmin' => [
+                CommonCustomPostFilterInputContainerModuleProcessor::class,
+                CommonCustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOST_BY_ID_STATUS
+            ],
+            'pageBySlug' => [
+                CommonFilterInputContainerModuleProcessor::class,
+                CommonFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_ENTITY_BY_SLUG
+            ],
+            'pageBySlugForAdmin' => [
+                CommonCustomPostFilterInputContainerModuleProcessor::class,
+                CommonCustomPostFilterInputContainerModuleProcessor::MODULE_FILTERINPUTCONTAINER_CUSTOMPOST_BY_SLUG_STATUS
             ],
             default => parent::getFieldDataFilteringModule($objectTypeResolver, $fieldName),
         };
@@ -109,8 +136,8 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
     protected function getFieldDataFilteringDefaultValues(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): array
     {
         switch ($fieldName) {
-            case 'childPages':
-            case 'childPagesForAdmin':
+            case 'pages':
+            case 'pagesForAdmin':
                 $limitFilterInputName = FilterInputHelper::getFilterInputName([
                     CommonFilterInputModuleProcessor::class,
                     CommonFilterInputModuleProcessor::MODULE_FILTERINPUT_LIMIT
@@ -142,8 +169,8 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
 
         // Check the "limit" fieldArg
         switch ($fieldName) {
-            case 'childPages':
-            case 'childPagesForAdmin':
+            case 'pages':
+            case 'pagesForAdmin':
                 if (
                     $maybeError = $this->maybeValidateLimitFieldArgument(
                         ComponentConfiguration::getPageListMaxLimit(),
@@ -174,25 +201,22 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
         ?array $expressions = null,
         array $options = []
     ): mixed {
-        $page = $resultItem;
         $pageTypeAPI = PageTypeAPIFacade::getInstance();
+        $query = $this->convertFieldArgsToFilteringQueryArgs($objectTypeResolver, $fieldName, $fieldArgs);
         switch ($fieldName) {
-            case 'parentPage':
-                return $pageTypeAPI->getParentPageID($page);
-        }
-
-        $query = array_merge(
-            $this->convertFieldArgsToFilteringQueryArgs($objectTypeResolver, $fieldName, $fieldArgs),
-            [
-                'parent-id' => $objectTypeResolver->getID($page),
-            ]
-        );
-        switch ($fieldName) {
-            case 'childPages':
-            case 'childPagesForAdmin':
+            case 'page':
+            case 'pageBySlug':
+            case 'pageForAdmin':
+            case 'pageBySlugForAdmin':
+                if ($pages = $pageTypeAPI->getPages($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS])) {
+                    return $pages[0];
+                }
+                return null;
+            case 'pages':
+            case 'pagesForAdmin':
                 return $pageTypeAPI->getPages($query, [QueryOptions::RETURN_TYPE => ReturnTypes::IDS]);
-            case 'childPageCount':
-            case 'childPageCountForAdmin':
+            case 'pageCount':
+            case 'pageCountForAdmin':
                 return $pageTypeAPI->getPageCount($query);
         }
 
@@ -202,9 +226,12 @@ class PageFieldResolver extends AbstractQueryableFieldResolver
     public function getFieldTypeResolverClass(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): ?string
     {
         switch ($fieldName) {
-            case 'parentPage':
-            case 'childPages':
-            case 'childPagesForAdmin':
+            case 'page':
+            case 'pageBySlug':
+            case 'pages':
+            case 'pageForAdmin':
+            case 'pageBySlugForAdmin':
+            case 'pagesForAdmin':
                 return PageTypeResolver::class;
         }
 
