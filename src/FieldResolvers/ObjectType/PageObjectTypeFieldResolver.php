@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace PoPSchema\Pages\FieldResolvers\ObjectType;
+namespace PoPCMSSchema\Pages\FieldResolvers\ObjectType;
 
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
 use PoP\ComponentModel\Schema\SchemaTypeModifiers;
 use PoP\ComponentModel\TypeResolvers\ConcreteTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 use PoP\ComponentModel\TypeResolvers\ScalarType\IntScalarTypeResolver;
-use PoPSchema\CustomPosts\TypeResolvers\InputObjectType\CustomPostSortInputObjectTypeResolver;
-use PoPSchema\Pages\TypeAPIs\PageTypeAPIInterface;
-use PoPSchema\Pages\TypeResolvers\InputObjectType\PageChildrenFilterInputObjectTypeResolver;
-use PoPSchema\Pages\TypeResolvers\InputObjectType\PagePaginationInputObjectTypeResolver;
-use PoPSchema\Pages\TypeResolvers\ObjectType\PageObjectTypeResolver;
+use PoPCMSSchema\CustomPosts\TypeResolvers\InputObjectType\CustomPostSortInputObjectTypeResolver;
+use PoPCMSSchema\Pages\TypeAPIs\PageTypeAPIInterface;
+use PoPCMSSchema\Pages\TypeResolvers\InputObjectType\PageChildrenFilterInputObjectTypeResolver;
+use PoPCMSSchema\Pages\TypeResolvers\InputObjectType\PagePaginationInputObjectTypeResolver;
+use PoPCMSSchema\Pages\TypeResolvers\ObjectType\PageObjectTypeResolver;
 use PoPSchema\SchemaCommons\Constants\QueryOptions;
-use PoPSchema\SchemaCommons\DataLoading\ReturnTypes;
-use PoPSchema\SchemaCommons\Resolvers\WithLimitFieldArgResolverTrait;
+use PoPCMSSchema\SchemaCommons\DataLoading\ReturnTypes;
+use PoPCMSSchema\SchemaCommons\Resolvers\WithLimitFieldArgResolverTrait;
 
 class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolver
 {
