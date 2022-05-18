@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace PoPCMSSchema\Pages\ConditionalOnModule\RESTAPI\RouteModuleProcessors;
+namespace PoPCMSSchema\Pages\ConditionalOnModule\RESTAPI\ComponentRoutingProcessors;
 
 use PoP\Root\App;
 use PoPAPI\API\Response\Schemes as APISchemes;
-use PoPAPI\RESTAPI\RouteModuleProcessors\AbstractRESTEntryRouteModuleProcessor;
+use PoPAPI\RESTAPI\ComponentRoutingProcessors\AbstractRESTEntryComponentRoutingProcessor;
 use PoPCMSSchema\Pages\ModuleProcessors\FieldDataloadModuleProcessor;
 use PoPCMSSchema\Pages\Routing\RequestNature;
 
-class EntryRouteModuleProcessor extends AbstractRESTEntryRouteModuleProcessor
+class EntryComponentRoutingProcessor extends AbstractRESTEntryComponentRoutingProcessor
 {
     protected function getInitialRESTFields(): string
     {
@@ -20,12 +20,12 @@ class EntryRouteModuleProcessor extends AbstractRESTEntryRouteModuleProcessor
     /**
      * @return array<string, array<array>>
      */
-    public function getModulesVarsPropertiesByNature(): array
+    public function getStatePropertiesToSelectComponentByNature(): array
     {
         $ret = array();
 
         $ret[RequestNature::PAGE][] = [
-            'module' => [
+            'component' => [
                 FieldDataloadModuleProcessor::class,
                 FieldDataloadModuleProcessor::MODULE_DATALOAD_RELATIONALFIELDS_PAGE,
                 [
