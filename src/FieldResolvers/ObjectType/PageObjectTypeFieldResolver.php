@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\Pages\FieldResolvers\ObjectType;
 
+use PoP\ComponentModel\TypeResolvers\InputTypeResolverInterface;
 use PoP\ComponentModel\QueryResolution\FieldDataAccessorInterface;
 use PoP\ComponentModel\Feedback\ObjectTypeFieldResolutionFeedbackStore;
 use PoP\ComponentModel\FieldResolvers\ObjectType\AbstractQueryableObjectTypeFieldResolver;
@@ -37,6 +38,7 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getIntScalarTypeResolver(): IntScalarTypeResolver
     {
+        /** @var IntScalarTypeResolver */
         return $this->intScalarTypeResolver ??= $this->instanceManager->getInstance(IntScalarTypeResolver::class);
     }
     final public function setPageObjectTypeResolver(PageObjectTypeResolver $pageObjectTypeResolver): void
@@ -45,6 +47,7 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getPageObjectTypeResolver(): PageObjectTypeResolver
     {
+        /** @var PageObjectTypeResolver */
         return $this->pageObjectTypeResolver ??= $this->instanceManager->getInstance(PageObjectTypeResolver::class);
     }
     final public function setPageTypeAPI(PageTypeAPIInterface $pageTypeAPI): void
@@ -53,6 +56,7 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getPageTypeAPI(): PageTypeAPIInterface
     {
+        /** @var PageTypeAPIInterface */
         return $this->pageTypeAPI ??= $this->instanceManager->getInstance(PageTypeAPIInterface::class);
     }
     final public function setPageChildrenFilterInputObjectTypeResolver(PageChildrenFilterInputObjectTypeResolver $pageChildrenFilterInputObjectTypeResolver): void
@@ -61,6 +65,7 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getPageChildrenFilterInputObjectTypeResolver(): PageChildrenFilterInputObjectTypeResolver
     {
+        /** @var PageChildrenFilterInputObjectTypeResolver */
         return $this->pageChildrenFilterInputObjectTypeResolver ??= $this->instanceManager->getInstance(PageChildrenFilterInputObjectTypeResolver::class);
     }
     final public function setPagePaginationInputObjectTypeResolver(PagePaginationInputObjectTypeResolver $pagePaginationInputObjectTypeResolver): void
@@ -69,6 +74,7 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getPagePaginationInputObjectTypeResolver(): PagePaginationInputObjectTypeResolver
     {
+        /** @var PagePaginationInputObjectTypeResolver */
         return $this->pagePaginationInputObjectTypeResolver ??= $this->instanceManager->getInstance(PagePaginationInputObjectTypeResolver::class);
     }
     final public function setCustomPostSortInputObjectTypeResolver(CustomPostSortInputObjectTypeResolver $customPostSortInputObjectTypeResolver): void
@@ -77,9 +83,13 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
     }
     final protected function getCustomPostSortInputObjectTypeResolver(): CustomPostSortInputObjectTypeResolver
     {
+        /** @var CustomPostSortInputObjectTypeResolver */
         return $this->customPostSortInputObjectTypeResolver ??= $this->instanceManager->getInstance(CustomPostSortInputObjectTypeResolver::class);
     }
 
+    /**
+     * @return array<class-string<ObjectTypeResolverInterface>>
+     */
     public function getObjectTypeResolverClassesToAttachTo(): array
     {
         return [
@@ -87,6 +97,9 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getFieldNamesToResolve(): array
     {
         return [
@@ -128,6 +141,9 @@ class PageObjectTypeFieldResolver extends AbstractQueryableObjectTypeFieldResolv
         };
     }
 
+    /**
+     * @return array<string,InputTypeResolverInterface>
+     */
     public function getFieldArgNameTypeResolvers(ObjectTypeResolverInterface $objectTypeResolver, string $fieldName): array
     {
         $fieldArgNameTypeResolvers = parent::getFieldArgNameTypeResolvers($objectTypeResolver, $fieldName);

@@ -17,10 +17,16 @@ class PageTypeDataLoader extends AbstractCustomPostTypeDataLoader
     }
     final protected function getPageTypeAPI(): PageTypeAPIInterface
     {
+        /** @var PageTypeAPIInterface */
         return $this->pageTypeAPI ??= $this->instanceManager->getInstance(PageTypeAPIInterface::class);
     }
 
-    public function executeQuery($query, array $options = []): array
+    /**
+     * @return mixed[]
+     * @param array<string,mixed> $query
+     * @param array<string,mixed> $options
+     */
+    public function executeQuery(array $query, array $options = []): array
     {
         return $this->getPageTypeAPI()->getPages($query, $options);
     }
