@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace PoPCMSSchema\Pages\ConditionalOnModule\CustomPostMedia\FieldResolvers\ObjectType;
 
-use PoPCMSSchema\CustomPostMedia\FieldResolvers\ObjectType\AbstractSupportingFeaturedImageCustomPostObjectTypeFieldResolver;
+use PoPCMSSchema\CustomPostMedia\FieldResolvers\ObjectType\AbstractWithFeaturedImageCustomPostObjectTypeFieldResolver;
 use PoPCMSSchema\Pages\TypeAPIs\PageTypeAPIInterface;
 use PoPCMSSchema\Pages\TypeResolvers\ObjectType\PageObjectTypeResolver;
 use PoP\ComponentModel\TypeResolvers\ObjectType\ObjectTypeResolverInterface;
 
-class SupportingFeaturedImagePageObjectTypeFieldResolver extends AbstractSupportingFeaturedImageCustomPostObjectTypeFieldResolver
+class WithFeaturedImagePageObjectTypeFieldResolver extends AbstractWithFeaturedImageCustomPostObjectTypeFieldResolver
 {
     private ?PageTypeAPIInterface $pageTypeAPI = null;
 
